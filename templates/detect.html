@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detect Sign Language</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures mobile responsiveness -->
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .letter-form {
+            display: inline-block;
+        }
+
+        .letter-btn {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            min-width: 60px;
+        }
+
+        .letter-btn:hover {
+            background-color: #357ab8;
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            background-color: #777;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #555;
+        }
+
+        /* Responsive font sizing for smaller devices */
+        @media (max-width: 600px) {
+            .letter-btn {
+                padding: 12px 16px;
+                font-size: 16px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Welcome, {{ session.username }}!</h2>
+    <p>Click a letter below to start capturing sign images for that alphabet.</p>
+
+    <div class="keyboard">
+        {% for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+            <form class="letter-form" method="POST" action="{{ url_for('capture', letter=letter) }}">
+                <button class="letter-btn" type="submit">{{ letter }}</button>
+            </form>
+        {% endfor %}
+    </div>
+
+    <a class="back-btn" href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
+
+</body>
+</html>
